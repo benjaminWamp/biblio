@@ -18,7 +18,7 @@
   </main>
   <router-view/>
   <footer>
-    <p>©Benjamin LANGLOIS 2022</p>
+    <p>© Benjamin LANGLOIS 2022</p>
   </footer>
 </template>
 
@@ -113,5 +113,17 @@ body{
 main{
   display: grid;
   grid-template-columns: 1FR 1FR 1FR;
+}
+
+.carousel .carousel__prev{
+      background: #FFF;
+      border-radius: 50%;
+      opacity: 0.7;
+}
+
+.carousel .carousel__next{
+      background: #FFF;
+      border-radius: 50%;
+      opacity: 0.7;
 }
 </style>

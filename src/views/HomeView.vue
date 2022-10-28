@@ -1,7 +1,39 @@
 <template>
     <H2>Top 10 des films les plus populaires</H2>
     <carousel :items-to-show="5">
-        <slide v-for="movie in movies" :key="movie.id">
+        <slide v-for="movie in populary" :key="movie.id">
+            <router-link :to="'/movie/' + movie.id" class="movies">
+                <img :src="`https://image.tmdb.org/t/p/w200${movie.poster_path}`" alt="{{movie.tilte}}">
+                <span>{{ movie.title }}</span>
+                <span>{{ movie.release_date }}</span>
+                <span>{{ movie.vote_average }}/10</span>
+            </router-link>
+        </slide>
+    
+        <template #addons>
+            <navigation />
+            <pagination />
+        </template>
+    </carousel>
+    <H2>Top 10 des meilleures films de 2020</H2>
+    <carousel :items-to-show="5">
+        <slide v-for="movie in best" :key="movie.id">
+            <router-link :to="'/movie/' + movie.id" class="movies">
+                <img :src="`https://image.tmdb.org/t/p/w200${movie.poster_path}`" alt="{{movie.tilte}}">
+                <span>{{movie.title}}</span>
+                <span>{{movie.release_date}}</span>
+                <span>{{movie.vote_average}}/10</span>
+            </router-link>
+        </slide>
+    
+        <template #addons>
+            <navigation />
+            <pagination />
+        </template>
+    </carousel>
+    <H2>Top 10 des meilleures dramas</H2>
+    <carousel :items-to-show="5">
+        <slide v-for="movie in drama" :key="movie.id">
             <router-link :to="'/movie/' + movie.id" class="movies">
                 <img :src="`https://image.tmdb.org/t/p/w200${movie.poster_path}`" alt="{{movie.tilte}}">
                 <span>{{movie.title}}</span>
@@ -32,21 +64,44 @@ export default {
         Navigation,
     },
     setup() {
-        const movies = ref([])
+        const populary = ref([])
+        const best =ref([])
+        const drama = ref([])
+
         fetch(`https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=${env.apikey}`)
             .then(response => response.json())
             .then(data => {
-                movies.value = data.results.slice(0, 10);
-                console.log('test', movies.value)
+                populary.value = data.results.slice(0, 10);
+                console.log('test', populary.value)
             })
+
+        fetch(`https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=${env.apikey}`)
+        .then(response => response.json())
+        .then( data => {
+            best.value = data.results.slice(0,10);
+            console.log('best', best.value)
+        })
+
+        fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=10&api_key=${env.apikey}`)
+            .then(response => response.json())
+            .then(data => {
+                drama.value = data.results.slice(0, 10);
+                console.log('best', drama.value)
+            })
+
         return {
-            movies
+            populary,
+            best,    
+            drama
         }
     }
 }
 </script>
 
 <style>
+H2{
+    margin: 6% ;
+}
 .movies{
     position: relative;
     overflow: hidden;

@@ -72,21 +72,18 @@ export default {
             .then(response => response.json())
             .then(data => {
                 populary.value = data.results.slice(0, 10);
-                console.log('test', populary.value)
             })
 
         fetch(`https://api.themoviedb.org/3/discover/movie?primary_release_year=2020&sort_by=vote_average.desc&api_key=${env.apikey}`)
         .then(response => response.json())
         .then( data => {
             best.value = data.results.slice(0,10);
-            console.log('best', best.value)
         })
 
         fetch(`https://api.themoviedb.org/3/discover/movie?with_genres=18&sort_by=vote_average.desc&vote_count.gte=10&api_key=${env.apikey}`)
             .then(response => response.json())
             .then(data => {
                 drama.value = data.results.slice(0, 10);
-                console.log('best', drama.value)
             })
 
         return {
@@ -100,7 +97,7 @@ export default {
 
 <style>
 H2{
-    margin: 6% ;
+    margin: 4% ;
 }
 .movies{
     position: relative;

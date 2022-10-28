@@ -30,7 +30,7 @@ export default {
     const route = useRoute();
     const actors = ref({});
 
-      fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=${env.apikey}&language=en-FR`)
+      fetch(`https://api.themoviedb.org/3/movie/${route.params.id}?api_key=${env.apikey}&language=fr`)
         .then(response => response.json())
         .then(data => {
           movie.value = data;
@@ -52,7 +52,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .home{
   display: flex;
   justify-content: space-around;
